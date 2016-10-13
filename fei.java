@@ -7,22 +7,27 @@ import org.jsoup.select.Elements;
 
 public class fei {
 
-	static String url="http://www.cnblogs.com/zyw-205520/archive/2012/12/20/2826402.html";
-	
-    public static void main(String[] args) {
-    	article();
-    }
 
-    
-    /**
+//	static String url="http://www.cnblogs.com/zyw-205520/archive/2012/12/20/2826402.html";
+	static String url="https://cms.hit.edu.cn/my/";
+	
+	/**
      * @param args
      * @throws Exception
      */
+    public static void main(String[] args) throws Exception{
+//    	article();
+    	custom();
+//    	blog();
+    }
+
+    
+
     /**
      * 获取指定HTML 文档指定的body
      * @throws IOException
      */
-    private static void bolgBody() throws IOException {
+    private static void blogBody() throws IOException {
     	
         // 直接从字符串中输入 HTML 文档
         String html = "<html><head><title> 开源中国社区 </title></head>"
@@ -45,13 +50,19 @@ public class fei {
         try {
             doc = Jsoup.connect("http://news.baidu.com/ns?ct=0&rn=20&ie=utf-8&bs=%E6%88%90%E5%93%81%E6%B2%B9%E4%BB%B7&rsv_bp=1&sr=0&cl=2&f=8&prevct=no&tn=newstitle&word=%E6%88%90%E5%93%81%E6%B2%B9%E4%BB%B7").get();
             Elements ListDiv = doc.getElementsByAttributeValue("class","c-title");
+            
             for (Element element : ListDiv) {
+//            	System.out.println(element.html());
+            	System.out.println("----------------");
                 Elements links = element.getElementsByTag("a");
                 for (Element link : links) {
                     String linkHref = link.attr("href");
-                    String linkText = link.text().trim();
+                    String linkText = link.text().trim(); //trim(): delete \\s　at the beginning and ending
+
                     System.out.println(linkHref);
                     System.out.println(linkText);
+
+//                    System.out.println(link.html());
                 }
             }
         } catch (IOException e) {
@@ -66,8 +77,9 @@ public class fei {
     public static void blog() {
         Document doc;
         try {
-            doc = Jsoup.connect("http://www.cnblogs.com/zyw-205520/archive/2012/12/20/2826402.html").get();
-            Elements ListDiv = doc.getElementsByAttributeValue("class","postBody");
+        	doc = Jsoup.connect(url).get();
+        	System.out.println(doc.html());
+            Elements ListDiv = doc.getElementsByAttributeValue("target", "_blank");
             for (Element element :ListDiv) {
                 System.out.println(element.html());
             }
@@ -76,6 +88,20 @@ public class fei {
             e.printStackTrace();
         }
         
+    }
+    
+    public static void custom() {
+    	Document doc;
+    	try {
+    		doc = Jsoup.connect(url).get();
+    		System.out.println(doc.html());
+    		Elements elements = doc.getElementsByTag("td");
+    		for(Element element : elements) {
+    			System.out.println(element.html());
+    		}
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
 
 }
