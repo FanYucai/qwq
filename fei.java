@@ -9,7 +9,7 @@ public class fei {
 
 
 //	static String url="http://www.cnblogs.com/zyw-205520/archive/2012/12/20/2826402.html";
-	static String url="https://cms.hit.edu.cn/my/";
+	static String url="http://www.baidu.com";
 	
 	/**
      * @param args
@@ -95,7 +95,7 @@ public class fei {
     	try {
     		doc = Jsoup.connect(url).get();
     		System.out.println(doc.html());
-    		Elements elements = doc.getElementsByTag("td");
+    		Elements elements = doc.getElementsByTag("title");
     		for(Element element : elements) {
     			System.out.println(element.html());
     		}
